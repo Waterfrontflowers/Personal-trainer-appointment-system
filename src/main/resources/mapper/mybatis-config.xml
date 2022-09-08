@@ -3,6 +3,6 @@
 <configuration>
     <typeAliases>
         <!--以包为单位，设置改包下所有的类型都拥有默认的别名，即类名且不区分大小写-->
-        <package name="com.harmony.card.dao"/>
+        <package name="com.nchu.ptas.entity"/>
     </typeAliases>
 </configuration>

@@ -16,3 +16,8 @@ spring:
 mybatis:
   #mybatis扫描mapper文件的位置
   mapper-locations: classpath:mapper/*Mapper.xml
+
+  # 控制台打印sql日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true

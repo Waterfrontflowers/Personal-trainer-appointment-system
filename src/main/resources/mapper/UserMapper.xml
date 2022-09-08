@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.ptas.mapper.UserMapper">
+
+
+    <select id="queryById" resultType="com.nchu.ptas.entity.User">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.nchu.ptas.entity.User">
+        insert into user(name, age) values (#{name}, #{age})
+    </insert>
+
+    <select id="listAll" parameterType="int" resultType="com.nchu.ptas.entity.User">
+        select * from `mall_user`
+    </select>
+
+
+
+</mapper>
