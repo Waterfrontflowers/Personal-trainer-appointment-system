@@ -12,6 +12,10 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
-
     List<User> listAll();
+
+    int insertWithUserNameAndPasswordAndPhone(String userName,String password,String phone);
+    int insertWithOpenId(String openId);
+
+    List<User> findByOpenId(String openId);
 }

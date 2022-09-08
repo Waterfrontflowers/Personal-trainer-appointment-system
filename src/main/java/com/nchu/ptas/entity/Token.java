@@ -12,14 +12,11 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class User {
+public class Token {
+    @JsonIgnore
     private int id;
     private String openId;
-    private String userName;
+    private String token;
     @JsonIgnore
-    private String password;
-    private String email;
-    private String phone;
-    private Date createTime;
-    private Date updateTime;
+    private Date loginTime;
 }

@@ -8,13 +8,23 @@
     </select>
 
     <insert id="insert" parameterType="com.nchu.ptas.entity.User">
-        insert into user(name, age) values (#{name}, #{age})
+        insert into user(name, age) values (#{name}, #{age});
     </insert>
 
     <select id="listAll" parameterType="int" resultType="com.nchu.ptas.entity.User">
-        select * from `mall_user`
+        select * from `mall_user`;
     </select>
 
+    <insert id="insertWithUserNameAndPasswordAndPhone" parameterType="com.nchu.ptas.entity.User">
+        insert into mall_user(user_name,password,phone) values (#{userName},#{password},#{phone});
+    </insert>
 
+    <insert id="insertWithOpenId" parameterType="com.nchu.ptas.entity.User">
+        insert into mall_user(open_id) values (#{openId});
+    </insert>
+
+    <select id="findByOpenId" resultType="com.nchu.ptas.entity.User">
+        select * from `mall_user` where open_id = #{openId};
+    </select>
 
 </mapper>

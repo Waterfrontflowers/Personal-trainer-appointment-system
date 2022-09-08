@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.ptas.mapper.TokenMapper">
+
+    <insert id="insertWithOpenIdAndToken" parameterType="com.nchu.ptas.entity.Token">
+        insert into mall_token(open_id,token) values (#{openId},#{token});
+    </insert>
+
+</mapper>
