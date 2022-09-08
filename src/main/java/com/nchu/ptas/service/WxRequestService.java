@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 @Transactional
 public class WxRequestService {
+    /**
+     *
+     * @param httpServletRequest 前端数据
+     * @return 微信api返回值
+     *
+     * 注：appId 与 appSecret 安全起见记录在环境变量中，分别为 wx_appId 与 wx_appSecret
+     */
     public static String onLogin(HttpServletRequest httpServletRequest){
         String code = httpServletRequest.getParameter("code");
         String appId = System.getenv("wx_appId");
