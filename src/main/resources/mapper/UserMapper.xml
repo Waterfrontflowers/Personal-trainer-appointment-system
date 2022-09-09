@@ -4,27 +4,31 @@
 
 
     <select id="queryById" resultType="com.nchu.ptas.entity.User">
-        select * from user where id = #{id}
+        SELECT * FROM user WHERE id = #{id}
     </select>
 
     <insert id="insert" parameterType="com.nchu.ptas.entity.User">
-        insert into user(name, age) values (#{name}, #{age});
+        INSERT INTO user(name, age) VALUES (#{name}, #{age});
     </insert>
 
     <select id="listAll" parameterType="int" resultType="com.nchu.ptas.entity.User">
-        select * from `mall_user`;
+        SELECT * FROM `mall_user`;
     </select>
 
     <insert id="insertWithUserNameAndPasswordAndPhone" parameterType="com.nchu.ptas.entity.User">
-        insert into mall_user(user_name,password,phone) values (#{userName},#{password},#{phone});
+        INSERT INTO mall_user(user_name,password,phone) VALUES (#{userName},#{password},#{phone});
     </insert>
 
     <insert id="insertWithOpenId" parameterType="com.nchu.ptas.entity.User">
-        insert into mall_user(open_id) values (#{openId});
+        INSERT INTO mall_user(open_id) VALUES (#{openId});
     </insert>
 
     <select id="findByOpenId" resultType="com.nchu.ptas.entity.User">
-        select * from `mall_user` where open_id = #{openId};
+        SELECT * FROM `mall_user` WHERE open_id = #{openId};
     </select>
+
+    <update id="updateUserNameWithOpenId" parameterType="com.nchu.ptas.entity.User">
+        UPDATE `mall_user` SET user_name = #{userName} WHERE open_id = #{openId};
+    </update>
 
 </mapper>

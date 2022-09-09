@@ -3,48 +3,41 @@ package com.nchu.ptas.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nchu.ptas.entity.Token;
 import com.nchu.ptas.entity.User;
-import com.nchu.ptas.mapper.UserMapper;
-import com.nchu.ptas.object.WxOnLogin;
+import com.nchu.ptas.mapper.TokenMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Ginger
- * @date 2022-09-08
+ * @date 2022-09-09
  */
 @Service
 @Transactional
-public class UserService {
+public class TokenService {
     @Autowired
-    private UserMapper userMapper;
+    TokenMapper tokenMapper;
 
-    public List<User> getAll(){
-        return userMapper.listAll();
+    public boolean tokenCheck(Token token){
+        return token.getOpenId()!= null && token.getToken() != null && tokenMapper.findByOpenIdAndToken(token.getOpenId(), token.getToken()).size() != 0;
     }
 
-    public int insert(User user){
-        return userMapper.insertWithUserNameAndPasswordAndPhone(user.getUserName(),user.getPassword(),user.getPhone());
-    }
-
-    public int rename(User user){
-        return userMapper.updateUserNameWithOpenId(user.getOpenId(),user.getUserName());
-    }
-
-    public User deserialization(Map map) {
+    public Token deserialization(Map map) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        User user;
+        Token token;
         try {
             String json = mapper.writeValueAsString(map);
-            user = mapper.readValue(json, User.class);
+            token = mapper.readValue(json, Token.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return user;
+        return token;
     }
+
 }

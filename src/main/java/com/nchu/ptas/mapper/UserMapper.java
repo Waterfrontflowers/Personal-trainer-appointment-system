@@ -18,4 +18,6 @@ public interface UserMapper {
     int insertWithOpenId(String openId);
 
     List<User> findByOpenId(String openId);
+
+    int updateUserNameWithOpenId(String openId,String userName);
 }

@@ -1,13 +1,20 @@
 package com.nchu.ptas.controller;
 
+import com.nchu.ptas.entity.Token;
 import com.nchu.ptas.entity.User;
+import com.nchu.ptas.object.JsonReturn;
+import com.nchu.ptas.service.TokenService;
 import com.nchu.ptas.service.UserService;
+import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ginger
@@ -19,6 +26,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TokenService tokenService;
 
     @RequestMapping("/user")
     public List<User> user(){
@@ -32,5 +42,21 @@ public class UserController {
         user.setPassword(httpServletRequest.getParameter("password"));
         user.setPhone(httpServletRequest.getParameter("phone"));
         return userService.insert(user);
+    }
+
+    @PostMapping("/rename")
+    public String rename(@RequestBody Map<String,String> map){
+        Token token = tokenService.deserialization(map);
+        User user = userService.deserialization(map);
+        if(tokenService.tokenCheck(token)){
+            if(userService.rename(user) == 1){
+                return  new JsonReturn(200,"success",Json.entity2Json(user)).toString();
+            }
+        }
+        else{
+            return new JsonReturn(101,"鉴权错误",null).toString();
+        }
+        return new JsonReturn(500,"error",Json.entity2Json(user)).toString();
+
     }
 }

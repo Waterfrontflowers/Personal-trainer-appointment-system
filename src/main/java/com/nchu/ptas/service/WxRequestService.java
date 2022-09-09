@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Ginger
@@ -25,6 +26,8 @@ public class WxRequestService {
 
     @Autowired
     private TokenMapper tokenMapper;
+
+    private final int TOKEN_MAX = 3;
     /**
      *
      * @param httpServletRequest 前端数据
@@ -36,7 +39,7 @@ public class WxRequestService {
         String code = httpServletRequest.getParameter("code");
         String appId = System.getenv("wx_appId");
         String appSecret = System.getenv("wx_appSecret");
-        System.out.println(appSecret);
+        //System.out.println(appSecret);
         String param = "appid="+appId+"&secret="
                 + appSecret + "&js_code=" + code + "&grant_type=authorization_code";
         String json = HttpSendUtil.instance().sendGet("https://api.weixin.qq.com/sns/jscode2session?"+param,"UTF-8");
@@ -51,9 +54,16 @@ public class WxRequestService {
             }
 
             token.setToken(new SHAUtil().SHA512(token.getOpenId() + new Date()));
-            tokenMapper.insertWithOpenIdAndToken(token.getOpenId(),token.getToken());
-
+            if(tokenMapper.findByOpenId(token.getOpenId()).size() <= TOKEN_MAX) {
+                tokenMapper.insertWithOpenIdAndToken(token.getOpenId(), token.getToken());
+            }
+            else{
+                List<Token> tokens = tokenMapper.findByOpenId(token.getOpenId());
+                tokenMapper.updateWithOpenIdAndToken(token.getOpenId(),tokens.get(0).getToken(),token.getToken());
+            }
         }
         return token;
     }
+
+
 }

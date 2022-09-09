@@ -1,10 +1,13 @@
 package com.nchu.ptas.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nchu.ptas.service.TokenService;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Ginger
@@ -19,4 +22,14 @@ public class Token {
     private String token;
     @JsonIgnore
     private Date loginTime;
+
+    public Token(){
+
+    }
+
+    public Token(String openId,String token){
+        this.openId = openId;
+        this.token = token;
+    }
+
 }

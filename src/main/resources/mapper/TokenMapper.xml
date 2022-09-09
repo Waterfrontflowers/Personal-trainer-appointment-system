@@ -3,7 +3,19 @@
 <mapper namespace="com.nchu.ptas.mapper.TokenMapper">
 
     <insert id="insertWithOpenIdAndToken" parameterType="com.nchu.ptas.entity.Token">
-        insert into mall_token(open_id,token) values (#{openId},#{token});
+        INSERT INTO mall_token(open_id,token) VALUES (#{openId},#{token});
     </insert>
+    
+    <select id="findByOpenId" resultType="com.nchu.ptas.entity.Token">
+        SELECT * FROM `mall_token` WHERE open_id = #{openId} ORDER BY login_time ASC;
+    </select>
+
+    <update id="updateWithOpenIdAndToken" parameterType="com.nchu.ptas.entity.Token">
+        UPDATE `mall_token` SET token = #{tokenNew} WHERE open_id = #{openId} AND token = #{tokenOld};
+    </update>
+
+    <select id="findByOpenIdAndToken" resultType="com.nchu.ptas.entity.Token">
+        SELECT * FROM `mall_token` WHERE open_id = #{openId} AND token = #{token};
+    </select>
 
 </mapper>

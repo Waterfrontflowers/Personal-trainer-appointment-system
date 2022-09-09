@@ -1,6 +1,9 @@
 package com.nchu.ptas.mapper;
 
+import com.nchu.ptas.entity.Token;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author Ginger
@@ -10,4 +13,12 @@ import org.apache.ibatis.annotations.Mapper;
 public interface TokenMapper {
 
     int insertWithOpenIdAndToken(String openId,String token);
+
+    List<Token> findByOpenId(String openId);
+
+    int updateWithOpenIdAndToken(String openId,String tokenOld,String tokenNew);
+
+    List<Token> findByOpenIdAndToken(String openId,String token);
+
+
 }
