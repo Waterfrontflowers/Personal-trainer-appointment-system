@@ -50,13 +50,13 @@ public class UserController {
         User user = userService.deserialization(map);
         if(tokenService.tokenCheck(token)){
             if(userService.rename(user) == 1){
-                return  new JsonReturn(200,"success",Json.entity2Json(user)).toString();
+                return Json.jsonReturn(200,"success",user);
             }
         }
         else{
-            return new JsonReturn(101,"鉴权错误",null).toString();
+            return Json.jsonReturn(100,"鉴权错误",null);
         }
-        return new JsonReturn(500,"error",Json.entity2Json(user)).toString();
+        return Json.jsonReturn(500,"error",null);
 
     }
 }

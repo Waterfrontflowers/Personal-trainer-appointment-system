@@ -2,6 +2,7 @@ package com.nchu.ptas.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nchu.ptas.object.JsonReturn;
 
 /**
  * @author Ginger
@@ -15,5 +16,9 @@ public class Json {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String jsonReturn(int code,String msg,Object object){
+        return new JsonReturn(code,msg,Json.entity2Json(object)).toString();
     }
 }

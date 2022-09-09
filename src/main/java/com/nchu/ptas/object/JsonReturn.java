@@ -24,14 +24,14 @@ public class JsonReturn {
         if(this.data != null && this.data.charAt(0) == '{') {
             return "{" +
                     "\"code\":" + code +
-                    ", \"msg\":\"" + msg + '"' +
-                    ", \"data\":" + data +
+                    ",\"msg\":\"" + msg + '"' +
+                    ",\"data\":" + data +
                     '}';
         }
         else {
             return "{" +
                     "\"code\":" + code +
-                    ", \"msg\":\"" + msg + '"' +
+                    ",\"msg\":\"" + msg + '"' +
                     '}';
         }
     }

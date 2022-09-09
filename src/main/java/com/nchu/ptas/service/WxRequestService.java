@@ -43,7 +43,7 @@ public class WxRequestService {
         String param = "appid="+appId+"&secret="
                 + appSecret + "&js_code=" + code + "&grant_type=authorization_code";
         String json = HttpSendUtil.instance().sendGet("https://api.weixin.qq.com/sns/jscode2session?"+param,"UTF-8");
-        System.out.println(json);
+        //System.out.println(json);
         WxOnLogin wxOnLogin = WxOnLogin.deserialization(json);
         Token token = new Token();
         if(wxOnLogin.getOpenid()!=null){
