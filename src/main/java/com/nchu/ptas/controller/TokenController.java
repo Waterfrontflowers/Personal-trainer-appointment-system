@@ -17,8 +17,4 @@ public class TokenController {
     @Autowired
     TokenService tokenService;
 
-   /* @RequestMapping("/token")
-    public String tokenCheck(@RequestBody Token token){
-        return tokenService.tokenCheck(token);
-    }*/
 }

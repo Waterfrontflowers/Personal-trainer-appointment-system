@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nchu.ptas.entity.User;
 import com.nchu.ptas.mapper.UserMapper;
-import com.nchu.ptas.object.WxOnLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +32,10 @@ public class UserService {
 
     public int rename(User user){
         return userMapper.updateUserNameWithOpenId(user.getOpenId(),user.getUserName());
+    }
+
+    public User userInfo(String openId){
+        return userMapper.findByOpenId(openId).get(0);
     }
 
     public User deserialization(Map map) {

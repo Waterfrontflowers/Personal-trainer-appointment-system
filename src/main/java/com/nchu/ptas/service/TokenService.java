@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nchu.ptas.entity.Token;
-import com.nchu.ptas.entity.User;
 import com.nchu.ptas.mapper.TokenMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;

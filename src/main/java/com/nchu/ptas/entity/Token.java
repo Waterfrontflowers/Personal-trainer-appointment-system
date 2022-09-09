@@ -1,13 +1,11 @@
 package com.nchu.ptas.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nchu.ptas.service.TokenService;
+
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author Ginger

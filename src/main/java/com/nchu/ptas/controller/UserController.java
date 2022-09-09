@@ -2,7 +2,6 @@ package com.nchu.ptas.controller;
 
 import com.nchu.ptas.entity.Token;
 import com.nchu.ptas.entity.User;
-import com.nchu.ptas.object.JsonReturn;
 import com.nchu.ptas.service.TokenService;
 import com.nchu.ptas.service.UserService;
 import com.nchu.ptas.utils.Json;
@@ -54,9 +53,21 @@ public class UserController {
             }
         }
         else{
-            return Json.jsonReturn(100,"鉴权错误",null);
+            return Json.jsonReturn(100,"鉴权错误");
         }
-        return Json.jsonReturn(500,"error",null);
+        return Json.jsonReturn(500,"error");
 
+    }
+
+
+    @PostMapping("/userInfo")
+    public String userInfo(@RequestBody Map<String,Object> map){
+        Token token = tokenService.deserialization(map);
+        if(tokenService.tokenCheck(token)){
+            return Json.jsonReturn(200,"success",userService.userInfo(token.getOpenId()));
+        }
+        else {
+            return Json.jsonReturn(100,"鉴权错误");
+        }
     }
 }
