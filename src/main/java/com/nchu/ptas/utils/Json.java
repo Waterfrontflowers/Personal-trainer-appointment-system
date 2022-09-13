@@ -1,5 +1,6 @@
 package com.nchu.ptas.utils;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nchu.ptas.object.JsonReturn;
@@ -18,6 +19,7 @@ public class Json {
      */
     public static String entity2Json(Object entity){
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
             return mapper.writeValueAsString(entity);
         } catch (JsonProcessingException e) {

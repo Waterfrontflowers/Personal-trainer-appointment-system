@@ -13,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class User {
+    @JsonIgnore
     private int id;
     private String openId;
     private String userName;

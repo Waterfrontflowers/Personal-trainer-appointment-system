@@ -20,7 +20,7 @@ public class JsonReturn {
 
     @Override
     public String toString() {
-        if(this.data != null && this.data.charAt(0) == '{') {
+        if(this.data != null && !"null".equals(this.data)) {
             return "{" +
                     "\"code\":" + code +
                     ",\"msg\":\"" + msg + '"' +
