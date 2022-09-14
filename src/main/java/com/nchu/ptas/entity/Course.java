@@ -1,6 +1,5 @@
 package com.nchu.ptas.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,20 +8,23 @@ import java.util.Date;
 
 /**
  * @author Ginger
- * @date 2022-09-08
+ * @date 2022-09-14
  */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User {
-    @JsonIgnore
+public class Course {
     private int id;
-    private String openId;
-    private String userName;
-    @JsonIgnore
-    private String password;
-    private String email;
-    private String phone;
+    private int coachId;
+    private String name;
+    private String subtitle;
+    private String mainImage;
+    private String subImage;
+    private String detail;
+    private String price;
+    private int stock;
+    private int status;
+    private Date courseTime;
     private Date createTime;
     private Date updateTime;
 }

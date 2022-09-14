@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.ptas.mapper.CourseMapper">
+    <select id="findByStatus" resultType="com.nchu.ptas.entity.Course">
+        SELECT * FROM `mall_course` WHERE status = #{status};
+    </select>
+
+    <select id="findOnSellById" resultType="com.nchu.ptas.entity.Course">
+        SELECT * FROM `mall_course` WHERE status = 1 AND stock > 0 AND id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

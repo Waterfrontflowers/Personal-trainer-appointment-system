@@ -6,10 +6,7 @@ import com.nchu.ptas.service.TokenService;
 import com.nchu.ptas.service.UserService;
 import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -44,30 +41,31 @@ public class UserController {
     }
 
     @PostMapping("/rename")
-    public String rename(@RequestBody Map<String,String> map){
+    public Json rename(@RequestBody Map<String,String> map){
         Token token = tokenService.deserialization(map);
         User user = userService.deserialization(map);
         if(tokenService.tokenCheck(token)){
             if(userService.rename(user) == 1){
-                return Json.jsonReturn(200,"success",user);
+                return Json.response(200,"success",user);
             }
         }
         else{
-            return Json.jsonReturn(100,"鉴权错误");
+            return Json.response(100,"鉴权错误");
         }
-        return Json.jsonReturn(500,"error");
+        return Json.response(500,"error");
 
     }
 
 
     @PostMapping("/userInfo")
-    public String userInfo(@RequestBody Map<String,Object> map){
+    @ResponseBody
+    public Json userInfo(@RequestBody Map<String,Object> map){
         Token token = tokenService.deserialization(map);
         if(tokenService.tokenCheck(token)){
-            return Json.jsonReturn(200,"success",userService.userInfo(token.getOpenId()));
+            return Json.response(200,"success",userService.userInfo(token.getOpenId()));
         }
         else {
-            return Json.jsonReturn(100,"鉴权错误");
+            return Json.response(100,"鉴权错误");
         }
     }
 }

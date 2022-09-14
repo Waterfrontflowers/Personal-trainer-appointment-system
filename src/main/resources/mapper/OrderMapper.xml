@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.ptas.mapper.OrderMapper">
+
+    <select id="findById" resultType="com.nchu.ptas.entity.Order">
+        SELECT * FROM `mall_order` WHERE id = #{id};
+    </select>
+
+
+    <select id="newOrder" parameterType="com.nchu.ptas.entity.Order" statementType="CALLABLE">
+        {
+            CALL new_order(
+                #{userId,mode=IN},
+                #{payment,mode=IN},
+                #{id,mode=OUT,jdbcType = INTEGER}
+            )
+        }
+    </select>
+
+</mapper>

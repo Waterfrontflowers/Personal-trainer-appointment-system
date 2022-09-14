@@ -4,6 +4,7 @@ import com.nchu.ptas.service.ImageService;
 import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,7 +19,8 @@ public class ImageController {
     ImageService imageService;
 
     @RequestMapping("/slideshow")
-    public String slideshow(){
-        return Json.jsonReturn(200,"success",imageService.userGetSlideshow());
+    @ResponseBody
+    public Json slideshow(){
+        return Json.response(200,"success",imageService.userGetSlideshow());
     }
 }

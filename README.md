@@ -1,3 +1,5 @@
+
+
 # Personal-trainer-appointment-system
 
 > v1.0.0
@@ -35,68 +37,6 @@ GET /ptas/wx/onLogin
 |» data|object|false|none||none|
 |»» openId|string|true|none||none|
 |»» token|string|true|none||none|
-
-## POST 个人信息查询
-
-POST /ptas/userInfo
-
-用于查询个人信息
-
-> Body 请求参数
-
-```json
-{
-  "openId": "string",
-  "token": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|object| 否 |none|
-|» openId|body|string| 是 |none|
-|» token|body|string| 是 |none|
-
-> 返回示例
-
-> 成功
-
-```json
-{
-  "code": 200,
-  "msg": "success",
-  "data": {
-    "openId": "oSBcm5IMj7BoutOSdNNo4GUumPBQ",
-    "userName": "Ginger",
-    "createTime": 1662650941000,
-    "updateTime": 1663052436000
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|object|false|none||none|
-|»» openId|string|true|none||none|
-|»» userName|string|true|none||none|
-|»» email|string|false|none||none|
-|»» phone|string|false|none||none|
-|»» createTime|integer|true|none||none|
-|»» updateTime|integer|true|none||none|
 
 ## POST 改名
 
@@ -156,6 +96,68 @@ POST /ptas/rename
 |»» openId|string|true|none||none|
 |»» userName|string|true|none||none|
 
+## POST 个人信息查询
+
+POST /ptas/userInfo
+
+用于查询个人信息
+
+> Body 请求参数
+
+```json
+{
+  "openId": "string",
+  "token": "string"
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|object| 否 |none|
+|» openId|body|string| 是 |none|
+|» token|body|string| 是 |none|
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "openId": "oSBcm5IMj7BoutOSdNNo4GUumPBQ",
+    "userName": "Ginger",
+    "createTime": "2022-09-08T15:29:01.000+00:00",
+    "updateTime": "2022-09-13T07:00:36.000+00:00"
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|object|false|none||none|
+|»» openId|string|true|none||none|
+|»» userName|string|true|none||none|
+|»» email|string|false|none||none|
+|»» phone|string|false|none||none|
+|»» createTime|string|true|none||none|
+|»» updateTime|string|true|none||none|
+
 # 用户侧/图片数据
 
 ## GET 获取轮播图（banner）
@@ -206,10 +208,93 @@ GET /ptas/image/slideshow
 |---|---|---|---|---|---|
 |» code|integer|true|none||none|
 |» msg|string|true|none||none|
-|» data|[object]|true|none||none|
+|» data|[object]|false|none||none|
 |»» picId|integer|true|none||none|
 |»» url|string|true|none||none|
 |»» used|boolean|true|none||none|
+
+# 用户侧/课程、订单
+
+## GET 获取当前在售课程
+
+GET /ptas/course
+
+获取当前在售课程
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": [
+    {
+      "id": 1,
+      "coachId": 1,
+      "name": "B01",
+      "price": "200.00",
+      "stock": 10,
+      "status": 1,
+      "courseTime": "2022-09-13T07:28:01.000+00:00",
+      "createTime": "2022-09-13T07:28:01.000+00:00",
+      "updateTime": "2022-09-13T07:28:01.000+00:00"
+    },
+    {
+      "id": 2,
+      "coachId": 2,
+      "name": "B02",
+      "price": "400.00",
+      "stock": 6,
+      "status": 1,
+      "courseTime": "2022-09-13T07:29:07.000+00:00",
+      "createTime": "2022-09-13T07:29:07.000+00:00",
+      "updateTime": "2022-09-13T07:29:07.000+00:00"
+    },
+    {
+      "id": 3,
+      "coachId": 3,
+      "name": "B03",
+      "price": "600.00",
+      "stock": 5,
+      "status": 1,
+      "courseTime": "2022-09-13T07:29:33.000+00:00",
+      "createTime": "2022-09-13T07:29:33.000+00:00",
+      "updateTime": "2022-09-13T07:29:33.000+00:00"
+    }
+  ]
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|[object]|false|none||none|
+|»» id|integer|true|none||none|
+|»» coachId|integer|true|none||none|
+|»» name|string|true|none||none|
+|»» subTitle|string|false|none||none|
+|»» mainImage|string|false|none||none|
+|»» subImage|string|false|none||none|
+|»» detail|string|false|none||none|
+|»» price|string|true|none||none|
+|»» stock|integer|true|none||none|
+|»» status|integer|true|none||none|
+|»» courseTime|string|true|none||none|
+|»» createTime|string|true|none||none|
+|»» updateTime|string|true|none||none|
 
 # 数据模型
 

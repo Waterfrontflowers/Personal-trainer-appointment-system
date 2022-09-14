@@ -25,13 +25,13 @@ public class WxRequestController {
 
     @GetMapping("/wx/onLogin")
     @ResponseBody
-    public String onLogin(HttpServletRequest httpServletRequest){
+    public Json onLogin(HttpServletRequest httpServletRequest){
         Token token = wxRequestService.onLogin(httpServletRequest);
         if(token.getOpenId()!= null && token.getToken() != null) {
-            return Json.jsonReturn(200, "success",token);
+            return Json.response(200, "success",token);
         }
         else {
-            return Json.jsonReturn(400,"not found",null);
+            return Json.response(400,"not found");
         }
     }
 
