@@ -21,7 +21,7 @@ public class Course {
     private String mainImage;
     private String subImage;
     private String detail;
-    private String price;
+    private double price;
     private int stock;
     private int status;
     private Date courseTime;

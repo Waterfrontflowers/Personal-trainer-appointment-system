@@ -16,4 +16,8 @@ public interface OrderMapper {
     void newOrder(Order order);
 
     List<Order> findById(int id);
+
+    List<Order> findByUserId(int userId);
+
+    void pay(int id);
 }

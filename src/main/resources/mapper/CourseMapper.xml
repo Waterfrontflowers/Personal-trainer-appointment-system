@@ -6,9 +6,28 @@
     </select>
 
     <select id="findOnSellById" resultType="com.nchu.ptas.entity.Course">
-        SELECT * FROM `mall_course` WHERE status = 1 AND stock > 0 AND id IN
+        SELECT * FROM `mall_course` WHERE course_time > now() AND status = 1 AND stock > 0 AND id IN
         <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
             #{id}
+        </foreach>
+    </select>
+
+    <select id="findOnSellWithViewByStatus" resultType="Map">
+        SELECT * FROM `mall_course_view` WHERE status = #{status} AND course_time > now();
+    </select>
+
+    <select id="whoHasCourse" resultType="Map">
+        SELECT coach_id ,COUNT(id) AS number FROM mall_course_view WHERE course_time > now() GROUP BY coach_id ORDER BY coach_name ASC;
+    </select>
+
+    <select id="findByCoachId" resultType="com.nchu.ptas.entity.Course">
+        SELECT * FROM `mall_course` WHERE course_time > now() AND coach_id = #{coachId};
+    </select>
+
+    <select id="findCoachById" resultType="Map">
+        SELECT * FROM `mall_coach_view` WHERE id IN
+        <foreach collection="list" item="coachId" index="index" open="(" close=")" separator=",">
+            #{coachId}
         </foreach>
     </select>
 </mapper>

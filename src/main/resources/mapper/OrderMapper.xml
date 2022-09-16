@@ -11,10 +11,17 @@
         {
             CALL new_order(
                 #{userId,mode=IN},
-                #{payment,mode=IN},
                 #{id,mode=OUT,jdbcType = INTEGER}
             )
         }
     </select>
+
+    <select id="findByUserId" resultType="com.nchu.ptas.entity.Order">
+        SELECT * FROM `mall_order` WHERE user_id = #{userId} ORDER BY id DESC;
+    </select>
+
+    <update id="pay" parameterType="com.nchu.ptas.entity.Order">
+        UPDATE mall_order SET payment_type = 1, status = 20,payment_time = now() WHERE id = #{id};
+    </update>
 
 </mapper>

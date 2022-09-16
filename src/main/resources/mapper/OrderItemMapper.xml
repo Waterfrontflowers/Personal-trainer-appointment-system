@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nchu.ptas.mapper.OrderItemMapper">
+    <select id="addOrderItem" parameterType="com.nchu.ptas.entity.OrderItem"  statementType="CALLABLE">
+        {
+            CALL add_order_item(
+                #{orderId,mode=IN},
+                #{courseId,mode=IN},
+                #{quantity,mode=IN},
+                #{success,mode=OUT,jdbcType=INTEGER}
+            )
+        }
+    </select>
+
+    <select id="findByOrderId" resultType="Map">
+        SELECT * FROM mall_order_item_view WHERE order_id = #{orderId};
+    </select>
+</mapper>
