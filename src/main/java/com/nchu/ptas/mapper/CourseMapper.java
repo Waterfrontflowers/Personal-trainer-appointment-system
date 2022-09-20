@@ -44,7 +44,7 @@ public interface CourseMapper {
      * @param coachId 教练id
      * @return 课程列表
      */
-    List<Course> findByCoachId(int coachId);
+    List<Map<String,Object>> findByCoachId(int coachId);
 
     /**
      * 查找教练信息

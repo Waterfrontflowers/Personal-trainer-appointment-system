@@ -1,6 +1,7 @@
 package com.nchu.ptas.controller;
 
 import com.nchu.ptas.entity.Token;
+import com.nchu.ptas.service.UserService;
 import com.nchu.ptas.service.WxRequestService;
 import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Ginger
@@ -23,12 +26,19 @@ public class WxRequestController {
     @Autowired
     WxRequestService wxRequestService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/wx/onLogin")
     @ResponseBody
-    public Json onLogin(HttpServletRequest httpServletRequest){
+    public Json onLogin(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         Token token = wxRequestService.onLogin(httpServletRequest);
         if(token.getOpenId()!= null && token.getToken() != null) {
-            return Json.response(200, "success",token);
+            Cookie openIdCookie = new Cookie("openId",token.getOpenId());
+            Cookie tokenCookie = new Cookie("token",token.getToken());
+            httpServletResponse.addCookie(openIdCookie);
+            httpServletResponse.addCookie(tokenCookie);
+            return Json.response(200, "success",userService.userInfo(token.getOpenId()));
         }
         else {
             return Json.response(400,"not found");

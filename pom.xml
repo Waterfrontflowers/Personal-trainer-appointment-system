@@ -14,7 +14,7 @@
     <name>Personal trainer appointment system</name>
     <description>Personal trainer appointment system</description>
     <properties>
-        <java.version>8</java.version>
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <dependency>

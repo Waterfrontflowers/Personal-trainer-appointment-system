@@ -53,7 +53,7 @@ public class WxRequestService {
                 userMapper.insertWithOpenId(token.getOpenId());
             }
 
-            token.setToken(new SHAUtil().SHA512(token.getOpenId() + new Date()));
+            token.setToken(new SHAUtil().SHA256(token.getOpenId() + new Date()));
             if(tokenMapper.findByOpenId(token.getOpenId()).size() <= TOKEN_MAX) {
                 tokenMapper.insertWithOpenIdAndToken(token.getOpenId(), token.getToken());
             }

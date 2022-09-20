@@ -21,7 +21,20 @@
     </select>
 
     <update id="pay" parameterType="com.nchu.ptas.entity.Order">
-        UPDATE mall_order SET payment_type = 1, status = 20,payment_time = now() WHERE id = #{id};
+        UPDATE mall_order SET payment_type = 1, status = 20,payment_time = now() WHERE id = #{id} AND status = 10;
     </update>
+
+    <select id="cancelOrder" parameterType="Map" statementType="CALLABLE">
+        {
+            CALL cancel_order(
+                #{orderId,mode=IN},
+                #{success,mode=OUT,jdbcType = INTEGER}
+            )
+        }
+    </select>
+
+    <select id="checkOrder" resultType="com.nchu.ptas.entity.Order">
+        SELECT * FROM `mall_order` WHERE user_id = #{userId} AND id = #{orderId};
+    </select>
 
 </mapper>

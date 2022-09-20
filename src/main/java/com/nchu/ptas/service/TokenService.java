@@ -22,8 +22,8 @@ public class TokenService {
     @Autowired
     TokenMapper tokenMapper;
 
-    public boolean tokenCheck(Token token){
-        return token.getOpenId()!= null && token.getToken() != null && tokenMapper.findByOpenIdAndToken(token.getOpenId(), token.getToken()).size() != 0;
+    public boolean tokenCheck(String openId,String token){
+        return openId != null && token != null && tokenMapper.findByOpenIdAndToken(openId, token).size() != 0;
     }
 
     public Token deserialization(Map map) {

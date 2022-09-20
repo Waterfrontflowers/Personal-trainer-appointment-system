@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +31,7 @@ public class CourseService {
     public boolean checkCourse(List<Map> courses){
         List<Integer> id = new ArrayList<>();
         for(Map i : courses){
-           id.add(((OrderItem)Json.deserialization(i, OrderItem.class)).getCourseId());
+           id.add(((Course)Json.deserialization(i, Course.class)).getId());
         }
         List<Course> courseList = courseMapper.findOnSellById(id);
         return courses.size() == courseList.size();
@@ -46,7 +45,7 @@ public class CourseService {
         }
         List<Map<String,Object>> coaches = courseMapper.findCoachById(coachId);
         for(Map i : coaches){
-            List<Course> courses = courseMapper.findByCoachId(Integer.parseInt(i.get("id").toString()));
+            List<Map<String,Object>> courses = courseMapper.findByCoachId(Integer.parseInt(i.get("id").toString()));
             i.put("course",courses);
             //i.remove("id");
         }

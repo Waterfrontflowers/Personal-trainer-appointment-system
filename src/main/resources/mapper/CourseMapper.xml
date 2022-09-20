@@ -20,8 +20,8 @@
         SELECT coach_id ,COUNT(id) AS number FROM mall_course_view WHERE course_time > now() GROUP BY coach_id ORDER BY coach_name ASC;
     </select>
 
-    <select id="findByCoachId" resultType="com.nchu.ptas.entity.Course">
-        SELECT * FROM `mall_course` WHERE course_time > now() AND coach_id = #{coachId};
+    <select id="findByCoachId" resultType="Map">
+        SELECT * FROM `mall_course_view` WHERE status = 1 AND course_time > now() AND coach_id = #{coachId};
     </select>
 
     <select id="findCoachById" resultType="Map">

@@ -41,10 +41,12 @@ public class UserController {
     }
 
     @PostMapping("/rename")
-    public Json rename(@RequestBody Map<String,String> map){
-        Token token = tokenService.deserialization(map);
-        User user = userService.deserialization(map);
-        if(tokenService.tokenCheck(token)){
+    public Json rename(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token,@RequestBody User user){
+        if(user.getUserName() == null || "".equals( user.getUserName())){
+            return Json.response(106,"缺少参数");
+        }
+        if(tokenService.tokenCheck(openId, token)){
+            user.setOpenId(openId);
             if(userService.rename(user) == 1){
                 return Json.response(200,"success",user);
             }
@@ -57,12 +59,11 @@ public class UserController {
     }
 
 
-    @PostMapping("/userInfo")
+    @GetMapping("/userInfo")
     @ResponseBody
-    public Json userInfo(@RequestBody Map<String,Object> map){
-        Token token = tokenService.deserialization(map);
-        if(tokenService.tokenCheck(token)){
-            return Json.response(200,"success",userService.userInfo(token.getOpenId()));
+    public Json userInfo(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token){
+        if(tokenService.tokenCheck(openId,token)){
+            return Json.response(200,"success",userService.userInfo(openId));
         }
         else {
             return Json.response(100,"鉴权错误");

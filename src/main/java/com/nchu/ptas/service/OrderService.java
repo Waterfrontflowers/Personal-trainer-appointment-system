@@ -1,15 +1,11 @@
 package com.nchu.ptas.service;
 
 import com.nchu.ptas.entity.Order;
-import com.nchu.ptas.entity.OrderItem;
-import com.nchu.ptas.entity.Token;
-import com.nchu.ptas.entity.User;
 import com.nchu.ptas.mapper.OrderMapper;
-import com.nchu.ptas.utils.Json;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +39,20 @@ public class OrderService {
 
     public void pay(int id){
         orderMapper.pay(id);
+    }
+
+    public boolean cancelOrder(int orderId){
+        Map<String,Integer> map = new HashMap<String,Integer>(2);
+        map.put("orderId",orderId);
+        orderMapper.cancelOrder(map);
+        if(map.get("success") == 0){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkOrder(int userId,int orderId){
+        return !orderMapper.checkOrder(userId,orderId).isEmpty();
     }
 
 }

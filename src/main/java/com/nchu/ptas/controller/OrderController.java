@@ -33,23 +33,28 @@ public class OrderController {
 
     @RequestMapping("/newOrder")
     @ResponseBody
-    public Json newOrder(@RequestBody Map<String,Object> request){
-        Token token = (Token) Json.deserialization(request,Token.class);
-        List<Map> course = (List<Map>) request.get("course");
-        if(!courseService.checkCourse(course)){
-            return Json.response(106,"库存不足");
+    public Json newOrder(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token,@RequestBody List<Map> course){
+        //List<Map> course = (List<Map>) request.get("course");
+        if(course==null || course.size()==0){
+            return Json.response(106,"缺少参数");
         }
 
-        if(tokenService.tokenCheck(token)){
-            User user =  userService.userInfo(token.getOpenId());
-            Order order = (Order) Json.deserialization(request, Order.class);
+        if(!courseService.checkCourse(course)){
+            return Json.response(120,"库存不足");
+        }
+
+        if(tokenService.tokenCheck(openId,token)){
+            User user =  userService.userInfo(openId);
+            Order order = new Order();
             order.setUserId(user.getId());
             order = orderService.newOrder(order);
 
             int count = 0;
             for(Map map : course){
-                OrderItem item = (OrderItem) Json.deserialization(map,OrderItem.class);
+                OrderItem item = new OrderItem();
+                item.setCourseId(Integer.parseInt(map.get("id").toString()));
                 item.setOrderId(order.getId());
+                item.setQuantity(1);
                 if(orderItemService.addItem(item)){
                     count++;
                 }
@@ -66,16 +71,14 @@ public class OrderController {
         return Json.response(100,"鉴权错误");
     }
 
-    @PostMapping("/orderItemList")
+    @GetMapping("/orderItemList")
     @ResponseBody
-    public Json orderItem(@RequestBody Map<String,Object> request){
-        Token token = (Token) Json.deserialization(request,Token.class);
-        OrderItem orderItem = (OrderItem) Json.deserialization(request,OrderItem.class);
-        if(!tokenService.tokenCheck(token)){
+    public Json orderItem(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token ,OrderItem orderItem){
+        if(!tokenService.tokenCheck(openId, token)){
             return Json.response(100,"鉴权错误");
         }
-        User user =  userService.userInfo(token.getOpenId());
-        if(request.get("orderId") == null){
+        User user =  userService.userInfo(openId);
+        if(orderItem.getOrderId() == 0){
             return Json.response(106,"缺少参数");
         }
         Order order = orderService.findById(orderItem.getOrderId());
@@ -89,41 +92,54 @@ public class OrderController {
     }
 
 
-    @PostMapping("/orderList")
+    @GetMapping("/orderList")
     @ResponseBody
-    public Json order(@RequestBody Map<String,Object> request){
-        Token token = (Token) Json.deserialization(request,Token.class);
-        OrderItem orderItem = (OrderItem) Json.deserialization(request,OrderItem.class);
-        if(!tokenService.tokenCheck(token)){
+    public Json order(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token){
+        if(!tokenService.tokenCheck(openId,token)){
             return Json.response(100,"鉴权错误");
         }
-        User user =  userService.userInfo(token.getOpenId());
+        User user =  userService.userInfo(openId);
         return Json.response(200,"success",orderService.findByUserId(user.getId()));
     }
 
     @PostMapping("/pay")
     @ResponseBody
-    public Json pay(@RequestBody Map<String,Object> request){
-        Token token = (Token) Json.deserialization(request,Token.class);
-        if(!tokenService.tokenCheck(token)){
+    public Json pay(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token,@RequestBody Order order){
+        if(!tokenService.tokenCheck(openId,token)){
             return Json.response(100,"鉴权错误");
         }
-        User user =  userService.userInfo(token.getOpenId());
+        User user =  userService.userInfo(openId);
 
-        if(request.get("orderId") == null){
+        if(order.getId() == 0){
             return Json.response(106,"缺少参数");
         }
-        Order order = orderService.findById(Integer.parseInt(request.get("orderId").toString()));
+        order = orderService.findById(order.getId());
         if(order == null){
             return Json.response(107,"异常参数");
         }
         if(order.getUserId()!= user.getId()){
             return Json.response(101,"越权访问");
         }
-        if(order.getPaymentTime() != null){
-            return Json.response(110,"请勿重复支付");
+        if(order.getStatus()!= 10){
+            return Json.response(110,"请勿重复支付或在非等待支付的订单上进行支付操作");
         }
         orderService.pay(order.getId());
         return Json.response(200,"success");
+    }
+
+    @PostMapping("/cancelOrder")
+    @ResponseBody
+    public Json cancel(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token,@RequestBody Order order){
+        if(!tokenService.tokenCheck(openId,token)){
+            return Json.response(100,"鉴权错误");
+        }
+        User user =  userService.userInfo(openId);
+        if(!orderService.checkOrder(user.getId(),order.getId())){
+            return Json.response(101,"越权访问");
+        }
+        if(orderService.cancelOrder(order.getId())){
+            return Json.response(200,"success");
+        }
+        return Json.response(120,"请勿重复提交");
     }
 }
