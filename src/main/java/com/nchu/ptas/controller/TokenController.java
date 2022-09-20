@@ -1,9 +1,7 @@
 package com.nchu.ptas.controller;
 
-import com.nchu.ptas.entity.Token;
 import com.nchu.ptas.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

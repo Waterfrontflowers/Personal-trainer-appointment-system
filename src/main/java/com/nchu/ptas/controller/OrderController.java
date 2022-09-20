@@ -2,7 +2,6 @@ package com.nchu.ptas.controller;
 
 import com.nchu.ptas.entity.Order;
 import com.nchu.ptas.entity.OrderItem;
-import com.nchu.ptas.entity.Token;
 import com.nchu.ptas.entity.User;
 import com.nchu.ptas.service.*;
 import com.nchu.ptas.utils.Json;

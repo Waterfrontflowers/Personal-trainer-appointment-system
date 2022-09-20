@@ -1,7 +1,6 @@
 package com.nchu.ptas.service;
 
 import com.nchu.ptas.entity.Course;
-import com.nchu.ptas.entity.OrderItem;
 import com.nchu.ptas.mapper.CourseMapper;
 import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;

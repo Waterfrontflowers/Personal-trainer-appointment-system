@@ -47,4 +47,11 @@ public interface UserMapper {
      * @return 1成功 0失败
      */
     int updateUserNameWithOpenId(String openId,String userName);
+
+    /**
+     * 更新图片信息
+     * @param userId 用户编码
+     * @param imageId 图片编码
+     */
+    void updateImage(int userId,int imageId);
 }

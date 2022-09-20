@@ -31,4 +31,7 @@
         UPDATE `mall_user` SET user_name = #{userName} WHERE open_id = #{openId};
     </update>
 
+    <update id="updateImage" parameterType="Integer">
+        UPDATE mall_user SET image_id = #{imageId} WHERE id = #{userId};
+    </update>
 </mapper>

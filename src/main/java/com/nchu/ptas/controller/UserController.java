@@ -1,6 +1,5 @@
 package com.nchu.ptas.controller;
 
-import com.nchu.ptas.entity.Token;
 import com.nchu.ptas.entity.User;
 import com.nchu.ptas.service.TokenService;
 import com.nchu.ptas.service.UserService;
@@ -8,9 +7,6 @@ import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Ginger
@@ -25,20 +21,6 @@ public class UserController {
 
     @Autowired
     TokenService tokenService;
-
-    @RequestMapping("/user")
-    public List<User> user(){
-        return userService.getAll();
-    }
-
-    @RequestMapping("/insert")
-    public int insert(HttpServletRequest httpServletRequest){
-        User user = new User();
-        user.setUserName(httpServletRequest.getParameter("userName"));
-        user.setPassword(httpServletRequest.getParameter("password"));
-        user.setPhone(httpServletRequest.getParameter("phone"));
-        return userService.insert(user);
-    }
 
     @PostMapping("/rename")
     public Json rename(@CookieValue(value = "openId",defaultValue = "") String openId,@CookieValue(value = "token",defaultValue = "") String token,@RequestBody User user){

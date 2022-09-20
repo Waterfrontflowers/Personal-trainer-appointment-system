@@ -25,4 +25,5 @@ public class User {
     private String phone;
     private Date createTime;
     private Date updateTime;
+    private int imageId;
 }

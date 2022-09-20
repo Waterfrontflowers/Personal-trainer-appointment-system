@@ -6,4 +6,19 @@
         SELECT * FROM images WHERE used = 1 AND category = 0;
     </select>
 
+    <insert id="save" parameterType="com.nchu.ptas.entity.Image">
+        INSERT INTO images (url,used,category) VALUES (#{url},#{used},#{category})
+    </insert>
+
+    <select id="findByUrl" resultType="com.nchu.ptas.entity.Image">
+        SELECT * FROM images WHERE url = #{url};
+    </select>
+
+    <update id="doNotUsed" parameterType="Integer">
+        UPDATE images SET used = 0 WHERE pic_id = #{pic_id}
+    </update>
+
+    <select id="findById" resultType="com.nchu.ptas.entity.Image">
+        SELECT * FROM images WHERE pic_id = #{id} LIMIT 1;
+    </select>
 </mapper>

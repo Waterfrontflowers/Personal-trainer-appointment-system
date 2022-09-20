@@ -4,6 +4,52 @@
 
 # 用户侧/用户操作
 
+## GET 获取头像路径
+
+GET /ptas/userImage
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "picId": 14,
+    "url": "/image/user/697dc0a9-5bdf-49dd-b500-8f56d4da1cc3-18359ffa159.jpg",
+    "used": true
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|object|false|none||none|
+|»» picId|integer|true|none||none|
+|»» url|string|true|none||none|
+|»» used|boolean|true|none||none|
+
 ## GET 个人信息查询
 
 GET /ptas/userInfo
@@ -14,7 +60,8 @@ GET /ptas/userInfo
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|header|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 
 > 返回示例
 
@@ -109,7 +156,8 @@ POST /ptas/rename
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|header|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 |body|body|object| 否 |none|
 |» userName|body|string| 是 |用户希望改成的名字|
 
@@ -145,6 +193,42 @@ POST /ptas/rename
 |» data|object|false|none||none|
 |»» openId|string|true|none||none|
 |»» userName|string|true|none||none|
+
+## POST 上传头像
+
+POST /ptas/newUserImage
+
+> Body 请求参数
+
+```yaml
+string
+
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+|body|body|string(binary)| 否 |none|
+
+> 返回示例
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
 
 # 用户侧/图片数据
 
@@ -503,7 +587,8 @@ POST /ptas/cancelOrder
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|header|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 |body|body|object| 否 |none|
 |» id|body|integer| 是 |none|
 
@@ -534,7 +619,8 @@ GET /ptas/orderItemList
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|cookie|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 |orderId|query|string| 是 |none|
 
 > 返回示例
@@ -617,7 +703,8 @@ POST /ptas/newOrder
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|header|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 |body|body|array[object]| 否 |none|
 
 > 返回示例
@@ -692,7 +779,8 @@ GET /ptas/orderList
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|header|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 
 > 返回示例
 
@@ -716,7 +804,7 @@ GET /ptas/orderList
 |»» userId|integer|true|none||none|
 |»» payment|number|true|none||none|
 |»» paymentType|integer|true|none||none|
-|»» status|integer|true|none||none|
+|»» status|integer|true|none||订单状态:0-已取消-10-未付款，20-已付款，30-交易成功|
 |»» createTime|string|true|none||none|
 |»» updateTime|string|true|none||none|
 
@@ -738,7 +826,8 @@ POST /ptas/pay
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Cookie|header|string| 是 |鉴权|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
 |body|body|object| 否 |none|
 |» id|body|integer| 是 |订单编号|
 
