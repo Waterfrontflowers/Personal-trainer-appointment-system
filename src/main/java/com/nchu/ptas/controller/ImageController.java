@@ -8,8 +8,8 @@ import com.nchu.ptas.service.UserService;
 import com.nchu.ptas.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -33,13 +33,20 @@ public class ImageController {
         return Json.response(200,"success",imageService.userGetSlideshow());
     }
 
+
     @PostMapping(value = "/newUserImage")
-    public Json newUserImage(@CookieValue(value = "openId",defaultValue = "") String openId, @CookieValue(value = "token",defaultValue = "") String token , HttpServletRequest request) throws IOException {
+    public Json newUserImage(@CookieValue(value = "openId",defaultValue = "") String openId, @CookieValue(value = "token",defaultValue = "") String token ,@RequestParam("image") MultipartFile image) throws IOException {
         if(!tokenService.tokenCheck(openId,token)){
             return Json.response(100,"鉴权错误");
         }
+        if(image == null || image.isEmpty()){
+            return Json.response(106,"缺少参数");
+        }
+        if(imageService.tooBig(image,1,"M")){
+            return Json.response(150,"图片过大");
+        }
         User user =  userService.userInfo(openId);
-        String url = imageService.saveUserImageOnDisk(request);
+        String url = imageService.saveUserImageOnDisk(image);
         if(url == null){
             return Json.response(500,"服务器故障");
         }

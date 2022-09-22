@@ -4,13 +4,13 @@ import com.nchu.ptas.entity.Image;
 import com.nchu.ptas.entity.User;
 import com.nchu.ptas.mapper.ImageMapper;
 import com.nchu.ptas.mapper.UserMapper;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,13 +37,29 @@ public class ImageService {
         return image;
     }
 
-    public String saveUserImageOnDisk(HttpServletRequest request){
+    /*public String saveUserImageOnDisk(HttpServletRequest request){
         String fileName = "/image/user/" + UUID.randomUUID() + "-" + Long.toHexString(System.currentTimeMillis()) + ".jpg";
         File targetFile = new File(HOME + fileName);
         try {
             ServletInputStream inputStream = request.getInputStream();
             // org.apache.commons.io.FileUtils
             FileUtils.copyInputStreamToFile(inputStream, targetFile);
+
+        }
+        catch (Exception e){
+            return null;
+        }
+        return fileName;
+    }*/
+
+    public String saveUserImageOnDisk(MultipartFile image){
+        String fileName = "/image/user/" + UUID.randomUUID() + "-" + Long.toHexString(System.currentTimeMillis()) + ".jpeg";
+        File targetFile = new File(HOME + fileName);
+        try {
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(targetFile));
+            out.write(image.getBytes());
+            out.flush();
+            out.close();
 
         }
         catch (Exception e){
@@ -68,6 +84,22 @@ public class ImageService {
         }
         userMapper.updateImage(user.getId(),image.getPicId());
         return true;
+    }
+
+
+    public boolean tooBig(MultipartFile file, int size, String unit) {
+        long len = file.getSize();
+        double fileSize = 0;
+        if ("B".equals(unit.toUpperCase())) {
+            fileSize = (double) len;
+        } else if ("K".equals(unit.toUpperCase())) {
+            fileSize = (double) len / 1024;
+        } else if ("M".equals(unit.toUpperCase())) {
+            fileSize = (double) len / 1048576;
+        } else if ("G".equals(unit.toUpperCase())) {
+            fileSize = (double) len / 1073741824;
+        }
+        return fileSize > size;
     }
 
     public Image findById(int id){
