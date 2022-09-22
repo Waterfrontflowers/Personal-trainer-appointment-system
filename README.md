@@ -4,52 +4,6 @@
 
 # 用户侧/用户操作
 
-## GET 获取头像路径
-
-GET /ptas/userImage
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|openId|cookie|string| 是 |鉴权|
-|token|cookie|string| 是 |鉴权|
-
-> 返回示例
-
-> 成功
-
-```json
-{
-  "code": 200,
-  "msg": "success",
-  "data": {
-    "picId": 14,
-    "url": "/image/user/697dc0a9-5bdf-49dd-b500-8f56d4da1cc3-18359ffa159.jpg",
-    "used": true
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|object|false|none||none|
-|»» picId|integer|true|none||none|
-|»» url|string|true|none||none|
-|»» used|boolean|true|none||none|
-
 ## GET 个人信息查询
 
 GET /ptas/userInfo
@@ -95,42 +49,6 @@ GET /ptas/userInfo
 |» code|integer|true|none||none|
 |» msg|string|true|none||none|
 |» data|object|false|none||none|
-|»» openId|string|true|none||none|
-|»» userName|string|true|none||none|
-|»» email|string|false|none||none|
-|»» phone|string|false|none||none|
-|»» createTime|string|true|none||none|
-|»» updateTime|string|true|none||none|
-
-## GET 登录
-
-GET /ptas/wx/onLogin
-
-用于用户登录，需要微信code码
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|code|query|string| 否 |微信登录码|
-
-> 返回示例
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|object|true|none||none|
 |»» openId|string|true|none||none|
 |»» userName|string|true|none||none|
 |»» email|string|false|none||none|
@@ -194,14 +112,110 @@ POST /ptas/rename
 |»» openId|string|true|none||none|
 |»» userName|string|true|none||none|
 
+## GET 登录
+
+GET /ptas/wx/onLogin
+
+用于用户登录，需要微信code码
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|code|query|string| 否 |微信登录码|
+
+> 返回示例
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|object|true|none||none|
+|»» openId|string|true|none||none|
+|»» userName|string|true|none||none|
+|»» email|string|false|none||none|
+|»» phone|string|false|none||none|
+|»» createTime|string|true|none||none|
+|»» updateTime|string|true|none||none|
+
+## GET 获取头像路径
+
+GET /ptas/userImage
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "picId": 15,
+    "url": "/image/user/b5b6463e-b9be-4029-92c9-cd3c29b75e51-1835a18c76c.jpg",
+    "used": true
+  }
+}
+```
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "picId": 14,
+    "url": "/image/user/697dc0a9-5bdf-49dd-b500-8f56d4da1cc3-18359ffa159.jpg",
+    "used": true
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|object|false|none||none|
+|»» picId|integer|true|none||none|
+|»» url|string|true|none||none|
+|»» used|boolean|true|none||none|
+
 ## POST 上传头像
 
 POST /ptas/newUserImage
 
+以二进制文件发送，接收端保存格式为jpeg，无格式转换！
+
 > Body 请求参数
 
 ```yaml
-string
+image: file://C:\Users\Hasee\Pictures\82e306381f30e9245e52d5174b086e061c95f70a.jpg
 
 ```
 
@@ -211,9 +225,19 @@ string
 |---|---|---|---|---|
 |openId|cookie|string| 是 |鉴权|
 |token|cookie|string| 是 |鉴权|
-|body|body|string(binary)| 否 |none|
+|body|body|object| 否 |none|
+|» image|body|string(binary)| 否 |以二进制文件发送，接收端保存格式为jpeg，无格式转换！|
 
 > 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success"
+}
+```
 
 ### 返回结果
 
@@ -286,6 +310,382 @@ GET /ptas/image/slideshow
 |»» used|boolean|true|none||none|
 
 # 用户侧/课程、订单
+
+## POST 取消订单
+
+POST /ptas/cancelOrder
+
+> Body 请求参数
+
+```json
+{
+  "id": 0
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+|body|body|object| 否 |none|
+|» id|body|integer| 是 |none|
+
+> 返回示例
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+
+## GET 获取当前可预约课程
+
+GET /ptas/course
+
+获取当前在售课程
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": [
+    {
+      "id": 1,
+      "coachName": "A0001",
+      "name": "B01",
+      "price": 200,
+      "stock": 10,
+      "status": 1,
+      "imageUrl": "/image/slideshow/0d19ef2a66c9d6adb4824401ae104ce8359958a173a97b3666fbf82e99921d4a.jpg",
+      "courseTime": "2022-09-13T07:28:01.000+00:00",
+      "createTime": "2022-09-13T07:28:01.000+00:00",
+      "updateTime": "2022-09-13T07:28:01.000+00:00"
+    },
+    {
+      "id": 2,
+      "coachName": "A0002",
+      "name": "B02",
+      "price": 400,
+      "stock": 6,
+      "status": 1,
+      "imageUrl": "/image/slideshow/105d6330e6084893ba3eb806ce2e4f448e90b302e8bb063160ad68b56a285549.jpg",
+      "courseTime": "2022-09-13T07:29:07.000+00:00",
+      "createTime": "2022-09-13T07:29:07.000+00:00",
+      "updateTime": "2022-09-13T07:29:07.000+00:00"
+    },
+    {
+      "id": 3,
+      "coachName": "A0003",
+      "name": "B03",
+      "price": 600,
+      "stock": 5,
+      "status": 1,
+      "imageUrl": "/image/slideshow/db96db2ec822a2c5d13ff3df5d70c4bd9f88460ab02fc28faa93272ed79a5330.jpg",
+      "courseTime": "2022-09-13T07:29:33.000+00:00",
+      "createTime": "2022-09-13T07:29:33.000+00:00",
+      "updateTime": "2022-09-13T07:29:33.000+00:00"
+    }
+  ]
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|[object]|false|none||none|
+|»» id|integer|true|none||none|
+|»» coachName|string|true|none||none|
+|»» name|string|true|none||none|
+|»» subTitle|string|false|none||none|
+|»» imageUrl|string|false|none||none|
+|»» detail|string|false|none||none|
+|»» price|number|true|none||none|
+|»» stock|integer|true|none||none|
+|»» status|integer|true|none||none|
+|»» courseTime|string|true|none||none|
+|»» createTime|string|true|none||none|
+|»» updateTime|string|true|none||none|
+
+## GET 查询订单列表
+
+GET /ptas/orderList
+
+查询订单列表
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+
+> 返回示例
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|[object]|false|none||none|
+|»» id|integer|true|none||none|
+|»» orderNo|integer|true|none||none|
+|»» userId|integer|true|none||none|
+|»» payment|number|true|none||none|
+|»» paymentType|integer|true|none||none|
+|»» status|integer|true|none||订单状态:0-已取消-10-未付款，20-已付款，30-交易成功|
+|»» createTime|string|true|none||none|
+|»» updateTime|string|true|none||none|
+
+## GET 查询订单明细
+
+GET /ptas/orderItemList
+
+查询订单明细
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+|orderId|query|string| 是 |none|
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 101,
+  "msg": "越权访问"
+}
+```
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": [
+    {
+      "coachName": "A0001",
+      "courseName": "B01",
+      "quantity": 1,
+      "orderId": 35,
+      "totalPrice": 200,
+      "createTime": "2022-09-15T14:03:08",
+      "currentUnitPrice": 200,
+      "updateTime": "2022-09-15T14:03:08",
+      "id": 23,
+      "courseId": 1,
+      "coachId": 1
+    }
+  ]
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|[object]|false|none||none|
+|»» coachName|string|false|none||none|
+|»» courseName|string|false|none||none|
+|»» quantity|integer|false|none||none|
+|»» orderId|integer|false|none||none|
+|»» totalPrice|integer|false|none||none|
+|»» createTime|string|false|none||none|
+|»» currentUnitPrice|integer|false|none||none|
+|»» updateTime|string|false|none||none|
+|»» id|integer|false|none||none|
+|»» courseId|integer|false|none||none|
+|»» coachId|integer|false|none||none|
+
+## POST 支付
+
+POST /ptas/pay
+
+支付接口
+
+> Body 请求参数
+
+```json
+{
+  "id": 0
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+|body|body|object| 否 |none|
+|» id|body|integer| 是 |订单编号|
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success"
+}
+```
+
+```json
+{
+  "code": 110,
+  "msg": "请勿重复支付或在非等待支付的订单上进行支付操作"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+
+## POST 新建订单
+
+POST /ptas/newOrder
+
+创建一个订单
+
+> Body 请求参数
+
+```json
+[
+  {
+    "id": 0
+  }
+]
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|openId|cookie|string| 是 |鉴权|
+|token|cookie|string| 是 |鉴权|
+|body|body|array[object]| 否 |none|
+
+> 返回示例
+
+> 成功
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "id": 42,
+    "orderNo": 0,
+    "userId": 8,
+    "payment": 200,
+    "paymentType": 0,
+    "status": 10,
+    "createTime": "2022-09-15T06:34:17.000+00:00",
+    "updateTime": "2022-09-15T06:34:17.000+00:00"
+  }
+}
+```
+
+```json
+{
+  "code": 201,
+  "msg": "部分商品超出库存",
+  "data": {
+    "id": 42,
+    "orderNo": 0,
+    "userId": 8,
+    "payment": 400,
+    "paymentType": 0,
+    "status": 10,
+    "createTime": "2022-09-15T06:34:17.000+00:00",
+    "updateTime": "2022-09-15T06:34:17.000+00:00"
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer|true|none||none|
+|» msg|string|true|none||none|
+|» data|object|false|none||none|
+|»» id|integer|true|none||none|
+|»» orderNo|integer|true|none||none|
+|»» userId|integer|true|none||none|
+|»» payment|integer|true|none||none|
+|»» paymentType|integer|true|none||none|
+|»» status|integer|true|none||none|
+|»» createTime|string|true|none||none|
+|»» updateTime|string|true|none||none|
 
 ## GET 获取当前可预约课程/教练分类
 
@@ -570,382 +970,6 @@ GET /ptas/courseSortByCoach
 |»» id|integer|true|none||none|
 |»» email|string|false|none||none|
 |»» url|string|true|none||none|
-
-## POST 取消订单
-
-POST /ptas/cancelOrder
-
-> Body 请求参数
-
-```json
-{
-  "id": 0
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|openId|cookie|string| 是 |鉴权|
-|token|cookie|string| 是 |鉴权|
-|body|body|object| 否 |none|
-|» id|body|integer| 是 |none|
-
-> 返回示例
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-
-## GET 查询订单明细
-
-GET /ptas/orderItemList
-
-查询订单明细
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|openId|cookie|string| 是 |鉴权|
-|token|cookie|string| 是 |鉴权|
-|orderId|query|string| 是 |none|
-
-> 返回示例
-
-> 成功
-
-```json
-{
-  "code": 101,
-  "msg": "越权访问"
-}
-```
-
-```json
-{
-  "code": 200,
-  "msg": "success",
-  "data": [
-    {
-      "coachName": "A0001",
-      "courseName": "B01",
-      "quantity": 1,
-      "orderId": 35,
-      "totalPrice": 200,
-      "createTime": "2022-09-15T14:03:08",
-      "currentUnitPrice": 200,
-      "updateTime": "2022-09-15T14:03:08",
-      "id": 23,
-      "courseId": 1,
-      "coachId": 1
-    }
-  ]
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|[object]|false|none||none|
-|»» coachName|string|false|none||none|
-|»» courseName|string|false|none||none|
-|»» quantity|integer|false|none||none|
-|»» orderId|integer|false|none||none|
-|»» totalPrice|integer|false|none||none|
-|»» createTime|string|false|none||none|
-|»» currentUnitPrice|integer|false|none||none|
-|»» updateTime|string|false|none||none|
-|»» id|integer|false|none||none|
-|»» courseId|integer|false|none||none|
-|»» coachId|integer|false|none||none|
-
-## POST 新建订单
-
-POST /ptas/newOrder
-
-创建一个订单
-
-> Body 请求参数
-
-```json
-[
-  {
-    "id": 0
-  }
-]
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|openId|cookie|string| 是 |鉴权|
-|token|cookie|string| 是 |鉴权|
-|body|body|array[object]| 否 |none|
-
-> 返回示例
-
-> 成功
-
-```json
-{
-  "code": 200,
-  "msg": "success",
-  "data": {
-    "id": 42,
-    "orderNo": 0,
-    "userId": 8,
-    "payment": 200,
-    "paymentType": 0,
-    "status": 10,
-    "createTime": "2022-09-15T06:34:17.000+00:00",
-    "updateTime": "2022-09-15T06:34:17.000+00:00"
-  }
-}
-```
-
-```json
-{
-  "code": 201,
-  "msg": "部分商品超出库存",
-  "data": {
-    "id": 42,
-    "orderNo": 0,
-    "userId": 8,
-    "payment": 400,
-    "paymentType": 0,
-    "status": 10,
-    "createTime": "2022-09-15T06:34:17.000+00:00",
-    "updateTime": "2022-09-15T06:34:17.000+00:00"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|object|false|none||none|
-|»» id|integer|true|none||none|
-|»» orderNo|integer|true|none||none|
-|»» userId|integer|true|none||none|
-|»» payment|integer|true|none||none|
-|»» paymentType|integer|true|none||none|
-|»» status|integer|true|none||none|
-|»» createTime|string|true|none||none|
-|»» updateTime|string|true|none||none|
-
-## GET 查询订单列表
-
-GET /ptas/orderList
-
-查询订单列表
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|openId|cookie|string| 是 |鉴权|
-|token|cookie|string| 是 |鉴权|
-
-> 返回示例
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|[object]|false|none||none|
-|»» id|integer|true|none||none|
-|»» orderNo|integer|true|none||none|
-|»» userId|integer|true|none||none|
-|»» payment|number|true|none||none|
-|»» paymentType|integer|true|none||none|
-|»» status|integer|true|none||订单状态:0-已取消-10-未付款，20-已付款，30-交易成功|
-|»» createTime|string|true|none||none|
-|»» updateTime|string|true|none||none|
-
-## POST 支付
-
-POST /ptas/pay
-
-支付接口
-
-> Body 请求参数
-
-```json
-{
-  "id": 0
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|openId|cookie|string| 是 |鉴权|
-|token|cookie|string| 是 |鉴权|
-|body|body|object| 否 |none|
-|» id|body|integer| 是 |订单编号|
-
-> 返回示例
-
-> 成功
-
-```json
-{
-  "code": 200,
-  "msg": "success"
-}
-```
-
-```json
-{
-  "code": 110,
-  "msg": "请勿重复支付或在非等待支付的订单上进行支付操作"
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-
-## GET 获取当前可预约课程
-
-GET /ptas/course
-
-获取当前在售课程
-
-> 返回示例
-
-> 成功
-
-```json
-{
-  "code": 200,
-  "msg": "success",
-  "data": [
-    {
-      "id": 1,
-      "coachName": "A0001",
-      "name": "B01",
-      "price": 200,
-      "stock": 10,
-      "status": 1,
-      "imageUrl": "/image/slideshow/0d19ef2a66c9d6adb4824401ae104ce8359958a173a97b3666fbf82e99921d4a.jpg",
-      "courseTime": "2022-09-13T07:28:01.000+00:00",
-      "createTime": "2022-09-13T07:28:01.000+00:00",
-      "updateTime": "2022-09-13T07:28:01.000+00:00"
-    },
-    {
-      "id": 2,
-      "coachName": "A0002",
-      "name": "B02",
-      "price": 400,
-      "stock": 6,
-      "status": 1,
-      "imageUrl": "/image/slideshow/105d6330e6084893ba3eb806ce2e4f448e90b302e8bb063160ad68b56a285549.jpg",
-      "courseTime": "2022-09-13T07:29:07.000+00:00",
-      "createTime": "2022-09-13T07:29:07.000+00:00",
-      "updateTime": "2022-09-13T07:29:07.000+00:00"
-    },
-    {
-      "id": 3,
-      "coachName": "A0003",
-      "name": "B03",
-      "price": 600,
-      "stock": 5,
-      "status": 1,
-      "imageUrl": "/image/slideshow/db96db2ec822a2c5d13ff3df5d70c4bd9f88460ab02fc28faa93272ed79a5330.jpg",
-      "courseTime": "2022-09-13T07:29:33.000+00:00",
-      "createTime": "2022-09-13T07:29:33.000+00:00",
-      "updateTime": "2022-09-13T07:29:33.000+00:00"
-    }
-  ]
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功|Inline|
-
-### 返回数据结构
-
-状态码 **200**
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|» code|integer|true|none||none|
-|» msg|string|true|none||none|
-|» data|[object]|false|none||none|
-|»» id|integer|true|none||none|
-|»» coachName|string|true|none||none|
-|»» name|string|true|none||none|
-|»» subTitle|string|false|none||none|
-|»» imageUrl|string|false|none||none|
-|»» detail|string|false|none||none|
-|»» price|number|true|none||none|
-|»» stock|integer|true|none||none|
-|»» status|integer|true|none||none|
-|»» courseTime|string|true|none||none|
-|»» createTime|string|true|none||none|
-|»» updateTime|string|true|none||none|
 
 # 数据模型
 
